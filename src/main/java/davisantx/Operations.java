@@ -13,4 +13,15 @@ public enum Operations {
         this.operationSimbol = operationSimbol;
     }
 
+    static public Operations getOperationFromChar(char operator) {
+        switch(operator) {
+            case '+': return Operations.SUM;
+            case '-': return Operations.SUB;
+            case '*': return Operations.PRO;
+            case '/': return Operations.DIV;
+            case '^': return Operations.EXP;
+            default: return null;
+        }
+    }
+
 }

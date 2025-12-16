@@ -15,9 +15,8 @@ public class Operation {
     }
 
     public boolean startNewOperation() {
-        if(!input.startNewInputLine()) {
-            return false;
-        }
+        if(!input.startNewInputLine()) return false;
+        System.out.println(getResultOperation());
         return true;
     }
 
@@ -26,8 +25,11 @@ public class Operation {
         expression.operations().clear();
     }
 
-    static public int getResultOperation() {
+    public int getResultOperation() {
         int result = 0;
+
+        System.out.println("Numbers: " + expression.numbers());
+        System.out.println("Operations: " + expression.operations());
         for (int i = 0; i < expression.numbers().size() - 1; ++i) {
             switch (expression.operations().get(i)) {
                 case SUM:
@@ -43,22 +45,11 @@ public class Operation {
                     result = expression.numbers().get(i) / expression.numbers().get(i + 1);
                     break;
                 case EXP:
-                    Double pow = Math.pow(expression.numbers().get(i), expression.numbers().get(i + 1));
-                    result = pow.intValue();
+                    result = (int) Math.pow(expression.numbers().get(i), expression.numbers().get(i + 1));
                     break;
             }
         }
         return result;
     }
 
-    static public Operations getOperationFromChar(char operator) {
-        switch(operator) {
-            case '+': return Operations.SUM;
-            case '-': return Operations.SUB;
-            case '*': return Operations.PRO;
-            case '/': return Operations.DIV;
-            case '^': return Operations.EXP;
-            default: return null;
-        }
-    }
 }

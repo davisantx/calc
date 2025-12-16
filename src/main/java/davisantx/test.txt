@@ -1,0 +1,128 @@
+package davisantx;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    static ArrayList<String> inputValues = new ArrayList<>();
+
+    static ArrayList<Integer> numbers = new ArrayList<>();
+    static ArrayList<Operations> operations = new ArrayList<>();
+
+    static String[] validNumbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    static String[] validOperators = {"+", "-", "*", "/", "^"};
+
+    public static void main(String[] args) {
+        boolean run = true;
+        Scanner scanner = new Scanner(System.in);
+
+        //ArrayList<String> input = new ArrayList<>();
+
+        while (true) {
+            System.out.print("> ");
+            String input = scanner.nextLine();
+
+            String rawInput = input.replaceAll("\\s+", "");
+
+            if(rawInput.equals("exit")) {
+                scanner.close();
+                break;
+            }
+
+            operations.clear();
+            numbers.clear();
+
+            expressionScanner(rawInput);
+
+            System.out.println(getResultOperation());
+
+        }
+    }
+
+    public static void expressionScanner(String rawInput) {
+        boolean nextValueIsANumber = true;
+
+        int inputIndex = 0;
+        while ((inputIndex != rawInput.length())) {
+            if (nextValueIsANumber) {
+                int newInputIndex = getNewInputIndexToVerifyValidNumbers(rawInput, inputIndex);
+
+                if (inputIndex == newInputIndex) {
+                    break;
+                }
+
+                String numbersOnString = "";
+
+                for (int i = 0; i < (newInputIndex - inputIndex); ++i) {
+                    char numberOnChar = rawInput.charAt(inputIndex + i);
+                    String numberOnString = String.valueOf(numberOnChar);
+                    numberOnString = numberOnString.concat(numberOnString);
+                }
+
+                int numberOnInt = Integer.parseInt(numberOnString);
+
+                numbers.add(numberOnInt);
+
+                inputIndex = newInputIndex;
+
+                nextValueIsANumber = false;
+            }else {
+                if(isValidInput(rawInput.charAt(inputIndex), validOperators)) {
+                    Operations operation = getOperationFromChar(rawInput.charAt(inputIndex));
+                    operations.add(operation);
+                    nextValueIsANumber = true;
+                    ++inputIndex;
+                }
+            }
+        }
+    }
+    public static int getResultOperation() {
+        int result = 0;
+        for (int i = 0; i < numbers.size() - 1; ++i) {
+            switch (operations.get(i)) {
+                case SUM:
+                    result = numbers.get(i) + numbers.get(i + 1);
+                    break;
+                case SUB:
+                     result = (numbers.get(i) - numbers.get(i + 1));
+                    break;
+                case PRO:
+                    result = numbers.get(i) * numbers.get(i + 1);
+                    break;
+                case DIV:
+                    result = numbers.get(i) / numbers.get(i + 1);
+                    break;
+                case EXP:
+                    Double pow = Math.pow(numbers.get(i), numbers.get(i + 1));
+                    result = pow.intValue();
+                    break;
+            }
+        }
+        return result;
+    }
+     public static Operations getOperationFromChar(char operator) {
+        switch(operator) {
+            case '+': return Operations.SUM;
+            case '-': return Operations.SUB;
+            case '*': return Operations.PRO;
+            case '/': return Operations.DIV;
+            case '^': return Operations.EXP;
+            default: return null;
+        }
+    }
+
+    public static int getNewInputIndexToVerifyValidNumbers(String rawInput, int inputIndex) {
+        while (inputIndex < rawInput.length() && isValidInput(rawInput.charAt(inputIndex), validNumbers)) {
+            inputIndex++;
+        }
+        return inputIndex;
+    }
+    public static boolean isValidInput(char rawInputCharacter, String[] validCharacters) {
+        for (String validCharacter : validCharacters) {
+            if (String.valueOf(rawInputCharacter).equals(validCharacter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
