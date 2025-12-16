@@ -5,13 +5,15 @@ import java.util.ArrayList;
 public class Operation {
     public Input input;
     private Expression expression;
+    public boolean debugMode;
 
     public static final String[] validOperators = {"+", "-", "*", "/", "^"};
-    public static final String[] validNumbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    public static final String[] validNumbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."};
 
-    public Operation() {
+    public Operation(boolean debugMode) {
         this.expression = new Expression(new ArrayList<>(), new ArrayList<>());
         this.input = new Input(expression);
+        this.debugMode = debugMode;
     }
 
     public boolean startNewOperation() {
@@ -25,27 +27,35 @@ public class Operation {
         expression.operations().clear();
     }
 
-    public int getResultOperation() {
-        int result = 0;
+    public Double getResultOperation() {
+        Double result = expression.numbers().getFirst();
 
-        System.out.println("Numbers: " + expression.numbers());
-        System.out.println("Operations: " + expression.operations());
+        if(debugMode) {
+            System.out.println("Numbers: " + expression.numbers());
+            System.out.println("Operations: " + expression.operations());
+        }
+
         for (int i = 0; i < expression.numbers().size() - 1; ++i) {
             switch (expression.operations().get(i)) {
                 case SUM:
-                    result = expression.numbers().get(i) + expression.numbers().get(i + 1);
+                    result = result + expression.numbers().get(i + 1);
                     break;
                 case SUB:
-                    result = (expression.numbers().get(i) - expression.numbers().get(i + 1));
+                    result = result - expression.numbers().get(i + 1);
                     break;
                 case PRO:
-                    result = expression.numbers().get(i) * expression.numbers().get(i + 1);
+                    result = result * expression.numbers().get(i + 1);
                     break;
                 case DIV:
-                    result = expression.numbers().get(i) / expression.numbers().get(i + 1);
+                    if((expression.numbers().get(i + 1) == (0.0))) {
+                        System.out.println("Error: x / 0");
+                        result = 0.0;
+                    } else {
+                        result = result / expression.numbers().get(i + 1);
+                    }
                     break;
                 case EXP:
-                    result = (int) Math.pow(expression.numbers().get(i), expression.numbers().get(i + 1));
+                    result = Math.pow(result, expression.numbers().get(i + 1));
                     break;
             }
         }

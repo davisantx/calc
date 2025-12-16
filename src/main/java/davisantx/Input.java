@@ -1,7 +1,5 @@
 package davisantx;
 
-import java.util.Scanner;
-
 public class Input {
     public String value;
     public InputReader inputReader;
@@ -17,6 +15,5 @@ public class Input {
         System.out.print("> ");
 
         return inputReader.startRead();
-
     }
 }

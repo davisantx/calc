@@ -1,7 +1,6 @@
 package davisantx;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Main {
@@ -9,14 +8,11 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-            Operation operation = new Operation();
+            Operation operation = new Operation(false);
 
-            boolean startNewOperation = operation.startNewOperation();
-
-            if(!startNewOperation) break;
+            if(!operation.startNewOperation()) break;
 
             operations.add(operation);
-
         }
     }
 }

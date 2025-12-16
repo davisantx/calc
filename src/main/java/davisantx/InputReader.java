@@ -35,7 +35,7 @@ public class InputReader {
             if (nextExpectedValueIsANumber) {
                 nextExpectedValueIsANumber = false;
 
-                Integer number = convertCharactersOnANumber();
+                Double number = convertCharactersOnANumber();
 
                 if(number == null) {
                     break;
@@ -61,7 +61,6 @@ public class InputReader {
 
     public Character convertOperationOnString() {
         if(isValidInput(value.charAt(lastReadValuePosition), Operation.validOperators)) {
-//          Operations operation = Operation.getOperationFromChar(value.charAt(lastReadValuePosition));
             Character operation = value.charAt(lastReadValuePosition);
             ++lastReadValuePosition;
             return operation;
@@ -69,7 +68,7 @@ public class InputReader {
         return null;
     }
 
-    public Integer convertCharactersOnANumber() {
+    public Double convertCharactersOnANumber() {
         if (verifyIfInputIsVoid()) return null;
 
         String numbersOnString = "";
@@ -77,11 +76,12 @@ public class InputReader {
         for (int i = 0; i < (newLastReadValuePosition - lastReadValuePosition); ++i) {
             char numberOnChar = value.charAt(lastReadValuePosition + i);
             String numberOnString = String.valueOf(numberOnChar);
+
             numbersOnString = numbersOnString.concat(numberOnString);
         }
 
         lastReadValuePosition = newLastReadValuePosition;
-        return Integer.parseInt(numbersOnString);
+        return Double.parseDouble(numbersOnString);
     }
 
     public void reset() {
