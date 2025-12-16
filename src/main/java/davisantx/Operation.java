@@ -6,7 +6,7 @@ public class Operation {
     public Input input;
     private Expression expression;
 
-    public static final String[] validOperators = {"+", "-", "*", "/"};
+    public static final String[] validOperators = {"+", "-", "*", "/", "^"};
     public static final String[] validNumbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     public Operation() {

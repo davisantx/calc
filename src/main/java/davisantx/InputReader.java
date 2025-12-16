@@ -62,7 +62,7 @@ public class InputReader {
     public Character convertOperationOnString() {
         if(isValidInput(value.charAt(lastReadValuePosition), Operation.validOperators)) {
 //          Operations operation = Operation.getOperationFromChar(value.charAt(lastReadValuePosition));
-            char operation = value.charAt(lastReadValuePosition);
+            Character operation = value.charAt(lastReadValuePosition);
             ++lastReadValuePosition;
             return operation;
         }
