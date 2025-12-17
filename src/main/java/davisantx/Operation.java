@@ -28,7 +28,11 @@ public class Operation {
     }
 
     public Double getResultOperation() {
-        Double result = expression.numbers().getFirst();
+        Double result = 0.0;
+
+        if (!expression.numbers().isEmpty()) {
+            result = expression.numbers().getFirst();
+        }
 
         if(debugMode) {
             System.out.println("Numbers: " + expression.numbers());
@@ -61,5 +65,4 @@ public class Operation {
         }
         return result;
     }
-
 }
