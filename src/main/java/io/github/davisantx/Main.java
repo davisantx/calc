@@ -1,4 +1,4 @@
-package davisantx;
+package io.github.davisantx;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-            Operation operation = new Operation(false);
+            Operation operation = new Operation();
+
+            operation.setDebugMode(false);
 
             if(!operation.startNewOperation()) break;
 

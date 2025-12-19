@@ -1,4 +1,4 @@
-package davisantx;
+package io.github.davisantx;
 
 public enum Operations {
     SUM("+"),

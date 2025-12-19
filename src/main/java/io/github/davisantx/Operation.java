@@ -1,18 +1,24 @@
-package davisantx;
+package io.github.davisantx;
 
 import java.util.ArrayList;
 
 public class Operation {
-    public Input input;
-    private Expression expression;
-    public boolean debugMode;
+    private final Input input;
+    private final Expression expression;
+    private boolean debugMode;
 
     public static final String[] validOperators = {"+", "-", "*", "/", "^"};
     public static final String[] validNumbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."};
 
-    public Operation(boolean debugMode) {
+    public Operation() {
         this.expression = new Expression(new ArrayList<>(), new ArrayList<>());
         this.input = new Input(expression);
+        this.debugMode = false;
+    }
+
+    public boolean getDebugMode() {return debugMode;}
+
+    public void setDebugMode(boolean debugMode) {
         this.debugMode = debugMode;
     }
 
@@ -27,7 +33,7 @@ public class Operation {
         expression.operations().clear();
     }
 
-    public Double getResultOperation() {
+    private Double getResultOperation() {
         Double result = 0.0;
 
         if (!expression.numbers().isEmpty()) {

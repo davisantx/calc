@@ -1,17 +1,16 @@
-package davisantx;
+package io.github.davisantx;
 
 import java.util.Scanner;
 
 public class InputReader {
-    public String value;
-    public Expression expression;
-    public Scanner scanner;
-    public int lastReadValuePosition;
-    public int newLastReadValuePosition;
-    public boolean nextExpectedValueIsANumber;
+    private String value;
+    private final Expression expression;
+    private final Scanner scanner;
+    private int lastReadValuePosition;
+    private int newLastReadValuePosition;
+    private boolean nextExpectedValueIsANumber;
 
-    public InputReader(String value, Expression expression) {
-        this.value = value;
+    public InputReader(Expression expression) {
         this.expression = expression;
         this.scanner = new Scanner(System.in);
         this.lastReadValuePosition = 0;
@@ -59,7 +58,7 @@ public class InputReader {
 
     }
 
-    public Character convertOperationOnString() {
+    private Character convertOperationOnString() {
         if(isValidInput(value.charAt(lastReadValuePosition), Operation.validOperators)) {
             Character operation = value.charAt(lastReadValuePosition);
             ++lastReadValuePosition;
@@ -68,7 +67,7 @@ public class InputReader {
         return null;
     }
 
-    public Double convertCharactersOnANumber() {
+    private Double convertCharactersOnANumber() {
         if (verifyIfInputIsVoid()) return null;
 
         String numbersOnString = "";
@@ -84,17 +83,17 @@ public class InputReader {
         return Double.parseDouble(numbersOnString);
     }
 
-    public void reset() {
+    private void reset() {
         this.lastReadValuePosition = 0;
         this.newLastReadValuePosition = 0;
         this.nextExpectedValueIsANumber = true;
     }
 
-    public boolean verifyIfInputIsVoid() {
+    private boolean verifyIfInputIsVoid() {
         return lastReadValuePosition == newLastReadValuePosition;
     }
 
-    public boolean verifyIfIsExit() {
+    private boolean verifyIfIsExit() {
         if(value.equalsIgnoreCase("exit")) {
             scanner.close();
             return false;
@@ -102,7 +101,7 @@ public class InputReader {
         return true;
     }
 
-    public boolean isValidInput(char rawInputCharacter, String[] validCharacters) {
+    private boolean isValidInput(char rawInputCharacter, String[] validCharacters) {
         for (String validCharacter : validCharacters) {
             if (String.valueOf(rawInputCharacter).equals(validCharacter)) {
                 return true;
@@ -111,7 +110,7 @@ public class InputReader {
         return false;
     }
 
-    public int getNewReadValuePositionToVerifyValidNumbers() {
+    private int getNewReadValuePositionToVerifyValidNumbers() {
         int position = lastReadValuePosition;
 
         while (position < value.length() && isValidInput(value.charAt(position), Operation.validNumbers)) {
