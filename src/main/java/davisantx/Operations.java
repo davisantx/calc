@@ -7,10 +7,10 @@ public enum Operations {
     DIV("/"),
     EXP("^");
 
-    private String operationSimbol;
+    private String operationSymbol;
 
-    Operations(String operationSimbol) {
-        this.operationSimbol = operationSimbol;
+    Operations(String operationSymbol) {
+        this.operationSymbol = operationSymbol;
     }
 
     static public Operations getOperationFromChar(char operator) {
