@@ -1,5 +1,6 @@
 package io.github.davisantx;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class InputReader {
@@ -28,8 +29,8 @@ public class InputReader {
     }
 
     private void readExpression() {
-        while ((lastReadValuePosition != value.length())) {
-            newLastReadValuePosition = getNewReadValuePositionToVerifyValidNumbers();  // ✅ Sem parâmetro
+        while (lastReadValuePosition != value.length()) {
+            newLastReadValuePosition = getNewReadValuePositionToVerifyValidNumbers();
 
             if (nextExpectedValueIsANumber) {
                 nextExpectedValueIsANumber = false;
@@ -55,7 +56,6 @@ public class InputReader {
                 expression.operations().add(operation);
             }
         }
-
     }
 
     private Character convertOperationOnString() {
@@ -80,7 +80,16 @@ public class InputReader {
         }
 
         lastReadValuePosition = newLastReadValuePosition;
-        return Double.parseDouble(numbersOnString);
+
+        double number = 0.0;
+
+        try {
+            number = Double.parseDouble(numbersOnString);
+        } catch(NumberFormatException e) {
+            System.out.println("(" + String.valueOf(expression.numbers().size() + 1) + ") " + "Invalid number");
+        }
+
+        return number;
     }
 
     private void reset() {
